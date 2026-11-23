@@ -251,4 +251,4 @@ function createDecoration() {
     }, duration * 1000);
 }
 
-setInterval(createDecoration, 500);
+setInterval(createDecoration, 180);
