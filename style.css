@@ -1,0 +1,377 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #351023 0%,
+            #170a17 45%,
+            #030205 100%
+        );
+
+    font-family: Georgia, serif;
+    color: white;
+}
+
+.scene {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background stars */
+
+.stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+    background: white;
+
+    box-shadow: 0 0 10px #ff7eae;
+
+    animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: 0.15;
+        transform: scale(0.6);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+/* Main heart */
+
+.heart-container {
+    position: relative;
+
+    width: min(96vw, 720px);
+    aspect-ratio: 500 / 470;
+
+    opacity: 0;
+    transform: scale(0.65);
+
+    transition:
+        opacity 2s ease,
+        transform 2s cubic-bezier(.2,.8,.2,1);
+
+    filter: drop-shadow(0 0 18px #ff398455);
+}
+
+.heart-container.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Soft Glowing Heartbeat */
+.heart-container.show .love-words {
+    transform-origin: center center;
+    animation: loveHeartbeat 1.8s ease-in-out infinite;
+}
+
+@keyframes loveHeartbeat {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 4px rgba(255, 105, 160, 0.35));
+    }
+
+    15% {
+        transform: scale(1.04);
+        filter: drop-shadow(0 0 8px rgba(255, 130, 180, 0.55));
+    }
+
+    30% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 4px rgba(255, 105, 160, 0.35));
+    }
+
+    45% {
+        transform: scale(1.03);
+        filter: drop-shadow(0 0 7px rgba(255, 130, 180, 0.5));
+    }
+
+    60% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 4px rgba(255, 105, 160, 0.35));
+    }
+}
+
+/* Love words */
+
+.love-words {
+    position: absolute;
+    inset: 0;
+}
+
+.word {
+    position: absolute;
+
+    white-space: nowrap;
+
+    transform: translate(-50%, -50%);
+
+    color: #ffd0e1;
+
+    font-family: Arial, sans-serif;
+    font-size: clamp(8px, 1.6vw, 11px);
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    text-shadow:
+        0 0 5px #ff8ab6,
+        0 0 22px #ff3984,
+        0 0 22px #ff247b;
+
+    opacity: 0;
+
+    transition: opacity 0.7s ease;
+}
+
+/* Center name */
+
+.center {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+
+    text-align: center;
+    z-index: 5;
+}
+
+.name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: clamp(35px, 9vw, 68px);
+    font-weight: bold;
+
+    letter-spacing: 8px;
+
+    color: #fff0f6;
+
+    text-shadow:
+        0 0 8px white,
+        0 0 40px #ff4c91,
+        0 0 50px #ff247b;
+}
+
+.name span {
+    opacity: 0;
+
+    transform: translateY(35px) scale(0.5);
+
+    animation: letterEnter 1.2s ease forwards;
+}
+
+@keyframes letterEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Subtitle */
+
+.subtitle {
+    margin-top: 17px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: clamp(9px, 2vw, 13px);
+    letter-spacing: 3px;
+
+    color: #ffc2d7;
+
+    text-shadow: 0 0 12px #ff4c91;
+
+    opacity: 0;
+
+    transition: opacity 2s ease;
+}
+
+.subtitle.show {
+    opacity: 1;
+}
+
+/* Footer */
+
+.footer {
+    position: absolute;
+    bottom: 5%;
+
+    font-size: 12px;
+    letter-spacing: 4px;
+
+    color: #d69ab1;
+
+    text-shadow: 0 0 10px #ff3984;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .heart-container {
+        width: 96vw;
+    }
+
+    .name {
+        letter-spacing: 5px;
+    }
+
+    .footer {
+        font-size: 10px;
+    }
+
+}
+
+/* Final Heart Glow */
+
+.heart-container.show {
+    animation: heartGlow 3s ease-in-out infinite;
+}
+
+@keyframes heartGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 15px #ff398455);
+    }
+
+    50% {
+        filter: drop-shadow(0 0 35px #ff3984aa);
+    }
+}
+
+/* Smooth moving words */
+
+.word {
+    will-change: left, top, opacity;
+    transition: opacity 0.8s ease;
+}
+
+/* Better mobile display */
+
+@media (max-width: 600px) {
+    .heart-container {
+        width: 98vw;
+    }
+
+    .word {
+        font-size: 8px;
+        letter-spacing: 0;
+    }
+}
+
+#name span {
+    display: inline-block;
+    animation:
+        letterEnter 1s ease-out both,
+        letterShake 2s ease-in-out infinite;
+}
+
+/* دخول الحرف من فوق لتحت */
+@keyframes letterEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(-60px) rotateX(90deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
+}
+
+/* اهتزاز خفيف مستمر */
+@keyframes letterShake {
+    0%, 100% {
+        translate: 0 0;
+        rotate: 0deg;
+    }
+    25% {
+        translate: 1px -2px;
+        rotate: 2deg;
+    }
+    50% {
+        translate: -1px 1px;
+        rotate: -2deg;
+    }
+    75% {
+        translate: 1px 1px;
+        rotate: 1deg;
+    }
+}
+/* Floating Hearts and Roses */
+#floatingDecor {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.floating-item {
+    position: absolute;
+    bottom: -60px;
+    animation: floatUp linear infinite;
+    opacity: 0;
+    user-select: none;
+    filter: drop-shadow(0 0 8px rgba(255, 80, 150, 0.7));
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.7);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg) scale(1.3);
+        opacity: 0;
+    }
+}
